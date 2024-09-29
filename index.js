@@ -23,7 +23,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:5000/"
+                url: "https://sampatti-search-api.vercel.app/api-docs/"
             }
         ]
     },
