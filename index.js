@@ -1,8 +1,10 @@
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { version } from "mongoose";
 import dotenv from "dotenv";
 import cors from 'cors';
-import userRoutes from './routes/user.route.js'; 
+import userRoutes from './routes/user.route.js';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
@@ -11,6 +13,25 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
+
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Sampatti Search API",
+            version: "1.0.0"
+        },
+        servers: [
+            {
+                url: "http://localhost:5000/"
+            }
+        ]
+    },
+    apis: ["./routes/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI).then(() => {
