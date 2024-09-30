@@ -2,9 +2,12 @@ import express from "express";
 import mongoose, { version } from "mongoose";
 import dotenv from "dotenv";
 import cors from 'cors';
-import userRoutes from './routes/user.route.js';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+
+// import routes
+import userRoutes from './routes/user.route.js';
+import propertyRoutes from "./routes/property.route.js";
 
 dotenv.config();
 
@@ -34,14 +37,13 @@ const swaggerSpec = swaggerJSDoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log("MongoDB connected successfully");
-}).catch(err => {
-    console.error("MongoDB connection error:", err.message);
-});
+mongoose.connect(process.env.MONGO_URI)
+    .then(console.log("MongoDB connected successfully"))
+    .catch(err => console.error("MongoDB connection error:", err.message));
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/properties", propertyRoutes);
 
 // Home Route
 app.get('/', (req, res) => {
