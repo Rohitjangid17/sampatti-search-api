@@ -3,7 +3,7 @@ import Property from "../models/property.model.js";
 // create property
 export const createProperty = async (req, res) => {
     try {
-        const propertyBody = req.body;
+        const propertyBody = { ...req.body, createdBy: req.userId };
         const property = new Property({ ...propertyBody });
         await property.save();
         res.status(201).json({ message: "Property created successfully" });

@@ -3,7 +3,7 @@ import Agent from "../models/agent.model.js";
 // create agent
 export const createAgent = async (req, res) => {
     try {
-        const agentBody = req.body;
+        const agentBody = { ...req.body, createdBy: req.userId };
         const agent = new Agent({ ...agentBody });
         await agent.save();
         res.status(201).json({ message: "Agent created successfully" });
