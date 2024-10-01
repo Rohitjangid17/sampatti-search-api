@@ -3,8 +3,8 @@ import Property from "../models/property.model.js";
 // create property
 export const createProperty = async (req, res) => {
     try {
-        const propertData = req.body;
-        const property = new Property({ ...propertData });
+        const propertyBody = req.body;
+        const property = new Property({ ...propertyBody });
         await property.save();
         res.status(201).json({ message: "Property created successfully" });
     } catch (error) {
@@ -61,9 +61,7 @@ export const updatePropertyById = async (req, res) => {
         const property = await Property.findByIdAndUpdate(id, updatedData, { new: true });
 
         // Check if the property was found and updated
-        if (!property) {
-            return res.status(404).json({ message: "Property not found" });
-        }
+        if (!property) return res.status(404).json({ message: "Property not found" });
 
         res.status(200).json({ message: "Property updated successfully", property });
     } catch (error) {

@@ -8,6 +8,7 @@ import swaggerUi from "swagger-ui-express";
 // import routes
 import userRoutes from './routes/user.route.js';
 import propertyRoutes from "./routes/property.route.js";
+import agentRoutes from "./routes/agent.route.js";
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/properties", propertyRoutes);
+app.use("/api/agents", agentRoutes);
 
 // Home Route
 app.get('/', (req, res) => {
