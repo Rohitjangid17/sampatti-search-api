@@ -30,7 +30,7 @@ export const getAgents = async (req, res) => {
         const agents = await Agent.find().skip((page - 1) * limit).limit(limit);
         const totalAgent = await Agent.countDocuments();
 
-        res.status(200).json({ agents, total: totalAgent, page, totalPage: Math.ceil(totalAgent) });
+        res.status(200).json({ agents, total: totalAgent, page, totalPage: Math.ceil(totalAgent / limit) });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
