@@ -61,11 +61,11 @@ const agentSchema = new mongoose.Schema({
             required: true
         }
     },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    }
+    // createdBy: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User",
+    //     required: true,
+    // }
 }, { timestamps: true });
 
 export default mongoose.model("Agent", agentSchema);
