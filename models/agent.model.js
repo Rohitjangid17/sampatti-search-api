@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const agentSchema = new mongoose.Schema({
-    images: {
+    image: {
         type: String,
         default: ""
     },

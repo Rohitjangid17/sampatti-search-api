@@ -1,22 +1,40 @@
 import express from "express";
-import mongoose, { version } from "mongoose";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from 'cors';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import fs from 'fs';
+import path from 'path';
 
-// import routes
+// Import routes
 import userRoutes from './routes/user.route.js';
 import propertyRoutes from "./routes/property.route.js";
 import agentRoutes from "./routes/agent.route.js";
 
 dotenv.config();
 
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
+
+// Using an absolute path as a fallback
+const uploadsDir = path.resolve('uploads/agents');
+
+// Create uploads/agents directory if it doesn't exist
+if (!fs.existsSync(uploadsDir)) {
+    try {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
+app.use("/uploads/agents", express.static(uploadsDir)); // Serve static files
 
 const options = {
     definition: {
@@ -39,7 +57,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
-    .then(console.log("MongoDB connected successfully"))
+    .then(() => console.log("MongoDB connected successfully"))
     .catch(err => console.error("MongoDB connection error:", err.message));
 
 // Routes
@@ -53,5 +71,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-    console.log("server is running");
+    console.log("Server is running on port", process.env.PORT);
 });

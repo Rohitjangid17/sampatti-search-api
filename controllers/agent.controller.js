@@ -3,8 +3,8 @@ import Agent from "../models/agent.model.js";
 // create agent
 export const createAgent = async (req, res) => {
     try {
-        const agentBody = { ...req.body, createdBy: req.userId };
-        const agent = new Agent({ ...agentBody });
+        const agent = new Agent(req.body);
+        if (req.file) return agent.image = req.file.path;
         await agent.save();
         res.status(201).json({ message: "Agent created successfully" });
     } catch (error) {
@@ -37,7 +37,7 @@ export const getAgents = async (req, res) => {
 }
 
 // delete agent by id
-export const deleteAgentById = async () => {
+export const deleteAgentById = async (req, res) => {
     try {
         const { id } = req.query;
 
