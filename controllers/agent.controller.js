@@ -12,7 +12,7 @@ export const createAgent = async (req, res) => {
     }
 }
 
-// get all agents or property by id
+// get all agents or agent by id
 export const getAgents = async (req, res) => {
     try {
         const { id } = req.query;
@@ -50,7 +50,7 @@ export const deleteAgentById = async (req, res) => {
 }
 
 // update agent by id
-export const updateAgentById = async () => {
+export const updateAgentById = async (req, res) => {
     try {
         const { id } = req.query;
         const agentBody = req.body;
