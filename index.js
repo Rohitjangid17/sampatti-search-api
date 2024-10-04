@@ -11,6 +11,7 @@ import path from 'path';
 import userRoutes from './routes/user.route.js';
 import propertyRoutes from "./routes/property.route.js";
 import agentRoutes from "./routes/agent.route.js";
+import reviewRoutes from "./routes/review.route.js"
 
 dotenv.config();
 
@@ -64,6 +65,7 @@ mongoose.connect(process.env.MONGO_URI)
 app.use("/api/users", userRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/agents", agentRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Home Route
 app.get('/', (req, res) => {
