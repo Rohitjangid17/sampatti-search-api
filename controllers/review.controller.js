@@ -17,13 +17,29 @@ export const createReview = async (req, res) => {
 // get all review and single review by id 
 export const getReviews = async (req, res) => {
     try {
-        const { id } = req.query;
+        const { id, createdAt } = req.query;
 
         // check id query if exist then get single review
         if (id) {
             const review = await Review.findById(id);
             if (!review) return res.status(404).json({ message: "Review not found" });
             return res.status(200).json(review);
+        }
+
+        // check createdAt query id exist then get past 7 days review
+        if (createdAt) {
+            const startDate = new Date(createdAt);
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + 1);
+
+            const reviews = await Review.find({
+                createdAt: {
+                    $gte: startDate,
+                    $lt: endDate,
+                }
+            });
+
+            return res.status(200).json({ reviews });
         }
 
         // if id does not provide then get all the agents
