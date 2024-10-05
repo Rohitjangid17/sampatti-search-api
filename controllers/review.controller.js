@@ -28,14 +28,14 @@ export const getReviews = async (req, res) => {
 
         // check createdAt query id exist then get past 7 days review
         if (createdAt) {
-            const startDate = new Date(createdAt);
-            const endDate = new Date(startDate);
-            endDate.setDate(endDate.getDate() + 1);
+            const providedDate = new Date(createdAt);
+            const startDate = new Date(providedDate);
+            startDate.setDate(startDate.getDate() - 7); // Start date is 7 days before the provided date
 
             const reviews = await Review.find({
                 createdAt: {
                     $gte: startDate,
-                    $lt: endDate,
+                    $lt: new Date(providedDate.setDate(providedDate.getDate() + 1)) // End date is the next day of the provided date
                 }
             });
 

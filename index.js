@@ -11,7 +11,8 @@ import path from 'path';
 import userRoutes from './routes/user.route.js';
 import propertyRoutes from "./routes/property.route.js";
 import agentRoutes from "./routes/agent.route.js";
-import reviewRoutes from "./routes/review.route.js"
+import reviewRoutes from "./routes/review.route.js";
+import orderRoutes from "./routes/order.route.js";
 
 dotenv.config();
 
@@ -66,6 +67,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/agents", agentRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Home Route
 app.get('/', (req, res) => {
