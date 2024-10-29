@@ -14,6 +14,8 @@ import agentRoutes from "./routes/agent.route.js";
 import reviewRoutes from "./routes/review.route.js";
 import orderRoutes from "./routes/order.route.js";
 import customerRoutes from "./routes/customer.route.js";
+import countryRoutes from "./routes/country.route.js";
+import stateRoutes from "./routes/state.route.js";
 
 dotenv.config();
 
@@ -64,6 +66,8 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.error("MongoDB connection error:", err.message));
 
 // Routes
+app.use("/api/countries", countryRoutes);
+app.use("/api/states", stateRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/agents", agentRoutes);
