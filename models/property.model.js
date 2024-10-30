@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const propertySchema = new mongoose.Schema({
     featureImage: {
-        type: string,
+        type: String,
         default: ""
     },
     images: {
