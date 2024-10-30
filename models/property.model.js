@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const propertySchema = new mongoose.Schema({
+    featureImage: {
+        type: string,
+        default: ""
+    },
     images: {
         type: [String],
         default: [],
@@ -38,6 +42,15 @@ const propertySchema = new mongoose.Schema({
         required: true
     },
     address: {
+        country: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        state: {
+            type: String,
+            required: true
+        },
         street: {
             type: String,
             required: true,
@@ -52,11 +65,6 @@ const propertySchema = new mongoose.Schema({
             required: true,
             trim: true,
         },
-        country: {
-            type: String,
-            required: true,
-            trim: true,
-        }
     },
     // createdBy: {
     //     type: mongoose.Schema.Types.ObjectId,
