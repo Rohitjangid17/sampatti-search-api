@@ -17,8 +17,8 @@ const propertySchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    propertyFor: {
-        type: [String],
+    propertyType: {
+        type: String,
         required: true
     },
     bedroom: {
