@@ -23,7 +23,8 @@ const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 
 // Using an absolute path as a fallback
-const uploadsDir = path.resolve('uploads/agents');
+// const uploadsDir = path.resolve('uploads/agents');
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Create uploads/agents directory if it doesn't exist
 if (!fs.existsSync(uploadsDir)) {

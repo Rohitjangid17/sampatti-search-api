@@ -3,10 +3,19 @@ import Property from "../models/property.model.js";
 // create property
 export const createProperty = async (req, res) => {
     try {
-        const propertyBody = { ...req.body, createdBy: req.userId };
+        // Get the file path from the uploaded file
+        const featureImage = req.file ? req.file.path : '';
+
+        // Add featureImage to property data
+        const propertyBody = {
+            ...req.body,
+            featureImage,
+        }
+
         const property = new Property({ ...propertyBody });
         await property.save();
-        res.status(201).json({ message: "Property created successfully" });
+        
+        res.status(201).json({ message: "Property created successfully", property });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
