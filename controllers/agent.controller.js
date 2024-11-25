@@ -26,8 +26,8 @@ export const getAgents = async (req, res) => {
         }
 
         // if id does not provide then get all the agents
-        const page = +req.query.page;
-        const limit = +req.query.limit;
+        const page = +req.query.page || 1;
+        const limit = +req.query.limit || 10;
         const agents = await Agent.find().skip((page - 1) * limit).limit(limit);
         const totalAgent = await Agent.countDocuments();
 
