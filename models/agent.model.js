@@ -7,58 +7,58 @@ const agentSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true,
+        // required: true,
     },
     email: {
         type: String,
-        unique: true,
-        lowercase: true,
+        // unique: true,
+        // lowercase: true,
     },
     mobileNumber: {
         type: String,
-        unique: true,
+        // unique: true,
     },
     propertiesNumber: {
         type: Number,
-        required: true,
+        // required: true,
     },
     address: {
         location: {
             type: String,
-            required: true
+            // required: true
         },
         street: {
             type: String,
-            required: true,
-            trim: true,
+            // required: true,
+            // trim: true,
         },
         zipCode: {
             type: String,
-            required: true,
+            // required: true,
         },
         city: {
             type: String,
-            required: true,
-            trim: true,
+            // required: true,
+            // trim: true,
         },
         country: {
             type: String,
-            required: true,
-            trim: true,
+            // required: true,
+            // trim: true,
         }
     },
     socialMediaUrl: {
         facebook: {
             type: String,
-            required: true
+            // required: true
         },
         instagram: {
             type: String,
-            required: true
+            // required: true
         },
         twitter: {
             type: String,
-            required: true
+            // required: true
         }
     },
     // createdBy: {

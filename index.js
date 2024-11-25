@@ -4,8 +4,7 @@ import dotenv from "dotenv";
 import cors from 'cors';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import fs from 'fs';
-import path from 'path';
+import multer from "multer";
 
 // Import routes
 import userRoutes from './routes/user.route.js';
@@ -19,27 +18,12 @@ import stateRoutes from "./routes/state.route.js";
 
 dotenv.config();
 
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
-
-// Using an absolute path as a fallback
-const uploadsDir = path.resolve('uploads/agents');
-
-// Create uploads/agents directory if it doesn't exist
-if (!fs.existsSync(uploadsDir)) {
-    try {
-        fs.mkdirSync(uploadsDir, { recursive: true });
-    } catch (error) {
-        console.error(error.message);
-    }
-}
-
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
-app.use("/uploads/agents", express.static(uploadsDir)); // Serve static files
+
+app.use("/uploads", express.static("uploads"));
 
 const options = {
     definition: {

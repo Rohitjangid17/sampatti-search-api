@@ -4,7 +4,8 @@ import Agent from "../models/agent.model.js";
 export const createAgent = async (req, res) => {
     try {
         const agent = new Agent(req.body);
-        if (req.file) return agent.image = req.file.path;
+        if (req.file) { agent.image = req.file.path; }
+        console.log(agent, "from controller");
         await agent.save();
         res.status(201).json({ message: "Agent created successfully" });
     } catch (error) {
@@ -25,8 +26,8 @@ export const getAgents = async (req, res) => {
         }
 
         // if id does not provide then get all the agents
-        const page = +req.query.page || 1;
-        const limit = +req.query.limit || 10;
+        const page = +req.query.page;
+        const limit = +req.query.limit;
         const agents = await Agent.find().skip((page - 1) * limit).limit(limit);
         const totalAgent = await Agent.countDocuments();
 

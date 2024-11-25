@@ -1,18 +1,27 @@
-import multer from 'multer';
-import path from 'path';
+import multer from "multer";
+import path from "path";
 
-// Set up storage for uploaded files
+// Configure Multer
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "uploads/agents"); // Set the destination folder
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`); // Set the filename
-    }
+  destination: (req, file, cb) => {
+    cb(null, "uploads/agents");
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueSuffix);
+  },
 });
 
-// Create multer instance
-const upload = multer({ storage });
+const uploadImage = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(new Error("Only JPEG and PNG files are allowed"));
+    }
+    cb(null, true);
+  },
+});
 
-export const uploadImage = upload.single("image"); // Export the upload middleware
+export default uploadImage;
