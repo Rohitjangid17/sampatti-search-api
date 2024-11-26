@@ -9,35 +9,5 @@ router.get("/", getAgents);
 router.delete("/", deleteAgentById);
 router.put("/", updateAgentById);
 
-/**
- * @swagger
- * /api/agents:
- *   post:
- *     summary: Create a new agent
- *     requestBody:
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: Name of the agent
- *               email:
- *                 type: string
- *                 description: Email of the agent
- *               mobileNumber:
- *                 type: string
- *                 description: Mobile number of the agent
- *               image:
- *                 type: string
- *                 format: binary
- *                 description: Profile image of the agent
- *     responses:
- *       201:
- *         description: Agent created successfully
- *       500:
- *         description: Server error
- */
 
 export default router;
