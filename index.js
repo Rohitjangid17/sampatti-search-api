@@ -40,11 +40,11 @@ const options = {
         },
         servers: [
             {
-                url: 'https://sampatti-search-api.vercel.app', // Your deployed URL
+                url: 'https://sampatti-search-api.vercel.app',
             },
         ],
     },
-    apis: ['./routes/*.js'], // Path to your routes
+    apis: ['./routes/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
