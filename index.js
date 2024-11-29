@@ -35,12 +35,13 @@ const options = {
         },
         servers: [
             {
-                url: "https://sampatti-search-api.vercel.app/api-docs/"
+                url: "https://sampatti-search-api.vercel.app"
             }
         ]
     },
     apis: ["./routes/*.js"],
 };
+
 
 const swaggerSpec = swaggerJSDoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
