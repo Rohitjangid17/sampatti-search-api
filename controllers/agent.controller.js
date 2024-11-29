@@ -1,4 +1,3 @@
-import { response } from "express";
 import Agent from "../models/agent.model.js";
 
 // create agent

@@ -15,6 +15,7 @@ import orderRoutes from "./routes/order.route.js";
 import customerRoutes from "./routes/customer.route.js";
 import countryRoutes from "./routes/country.route.js";
 import stateRoutes from "./routes/state.route.js";
+import categoryRoutes from "./routes/category.route.js";
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ app.use("/api/agents", agentRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/customers", customerRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // Home Route
 app.get('/', (req, res) => {
