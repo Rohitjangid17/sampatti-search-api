@@ -5,6 +5,7 @@ import cors from 'cors';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import multer from "multer";
+import swaggerUiDist from 'swagger-ui-dist';
 
 // Import routes
 import userRoutes from './routes/user.route.js';
@@ -22,29 +23,37 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
+app.use(cors({
+    origin: "https://sampatti-search-api.vercel.app",
+    methods: "GET,POST",
+}));
 app.use(express.json()); // To parse JSON bodies
 
 app.use("/uploads", express.static("uploads"));
 
 const options = {
     definition: {
-        openapi: "3.0.0",
+        openapi: '3.0.0',
         info: {
-            title: "Sampatti Search API",
-            version: "1.0.0"
+            title: 'Sampatti Search API',
+            version: '1.0.0',
         },
         servers: [
             {
-                url: "https://sampatti-search-api.vercel.app"
-            }
-        ]
+                url: 'https://sampatti-search-api.vercel.app', // Your deployed URL
+            },
+        ],
     },
-    apis: ["./routes/*.js"],
+    apis: ['./routes/*.js'], // Path to your routes
 };
 
-
 const swaggerSpec = swaggerJSDoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Serve Swagger UI assets manually from swagger-ui-dist
+app.use('/api-docs', express.static(swaggerUiDist.absolutePath()));
+
+// Setup Swagger UI to use the spec
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
