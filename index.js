@@ -23,10 +23,10 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-app.use(cors({
-    origin: "https://sampatti-search-api.vercel.app",
-    methods: "GET,POST",
-}));
+// app.use(cors({
+//     origin: "https://sampatti-search-api.vercel.app",
+//     methods: "GET,POST",
+// }));
 app.use(express.json()); // To parse JSON bodies
 
 app.use("/uploads", express.static("uploads"));
