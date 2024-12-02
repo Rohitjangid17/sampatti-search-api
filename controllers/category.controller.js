@@ -6,14 +6,12 @@ export const createCategory = async (req, res) => {
     let message = "";
 
     try {
-        const { title } = req.body;
+        const { title, description } = req.body;
 
         const category = new Category(req.body);
         const existingCategory = await Category.findOne({
             $or: [{ title: req.body.title }],
         });
-
-        console.log(`existing category ${existingCategory}`)
 
         // check category already exists or not
         if (existingCategory) {
@@ -27,6 +25,20 @@ export const createCategory = async (req, res) => {
             response = false;
             message = "Category title is required";
             res.status(400).json({ response: response, message: message });
+        }
+
+        // check title length grether then 100 character or not
+        if (title.length > 100) {
+            response = false;
+            message = "Category title should not exceed 100 characters";
+            return res.status(400).json({ response: response, message: message });
+        }
+
+        // check description length grether then 500 character or not
+        if (description && description.length > 500) {
+            response = false;
+            message = "Category description should not exceed 500 characters";
+            return res.status(400).json({ response: response, message: message });
         }
 
         await category.save();
@@ -66,6 +78,94 @@ export const getCategory = async (req, res) => {
 
         res.status(200).json({ response: response, categories, total: totalCategory, page, totalPage: Math.ceil(totalCategory / limit) });
     } catch (error) {
-        return res.status(500).json({ response: false, message: "Something went wrong", error: error.message });
+        let response = false;
+        let message = "Something went wrong";
+        res.status(500).json({ response: response, message: message, error: error.message });
+    }
+}
+
+// delete agent by id
+export const deleteCategoryById = async (req, res) => {
+    let response = false;
+    let message = "";
+
+    try {
+        const { id } = req.query;
+
+        const category = await Category.findByIdAndDelete(id);
+
+        // check the category if not exist then throw error
+        if (!category) {
+            response = false;
+            message = "Category not found";
+            res.status(404).json({ response: response, message: message });
+        }
+
+        response = true;
+        message = "Category delete successfully";
+        res.status(200).json({ response: response, message: message });
+    } catch (error) {
+        response = false;
+        message = "Something went wrong";
+        return res.status(500).json({ response: response, message: response, error: error.message });
+    }
+}
+
+// category update by id
+export const updateCategoryById = async (req, res) => {
+    let response = false;
+    let message = "";
+
+    try {
+        const { title, description } = req.body;
+        const { id } = req.query;
+
+        const existingCategory = await Category.findOne({
+            $or: [{ title: req.body.title }],
+        });
+
+        // check category already exists or not
+        if (existingCategory) {
+            response = false;
+            message = "Category is already taken";
+            res.status(400).json({ response: response, message: message });
+        }
+
+        // check title is required
+        if (!title) {
+            response = false;
+            message = "Category title is required";
+            res.status(400).json({ response: response, message: message });
+        }
+
+        // check title length grether then 100 character or not
+        if (title.length > 100) {
+            response = false;
+            message = "Category title should not exceed 100 characters";
+            return res.status(400).json({ response: response, message: message });
+        }
+
+        // check description length grether then 500 character or not
+        if (description && description.length > 500) {
+            response = false;
+            message = "Category description should not exceed 500 characters";
+            return res.status(400).json({ response: response, message: message });
+        }
+
+        const category = await Category.findByIdAndUpdate(id, req.body, { new: true });
+
+        if (!category) {
+            response = false;
+            message = "Category not found";
+            res.status(404).json({ response: response, message: message });
+        }
+
+        response = true;
+        message = "Category updated successfully";
+        res.status(200).json({ response: response, message: message });
+    } catch (error) {
+        let response = false;
+        let message = "Something went wrong";
+        res.status(500).json({ response: response, message: message, error: error.message });
     }
 }
