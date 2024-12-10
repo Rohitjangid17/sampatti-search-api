@@ -4,18 +4,19 @@ const reviewSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        maxlength: 100
+        maxlength: 50
     },
     propertyAddress: {
         type: String,
         required: true,
-        maxlength: 200
+        maxlength: 100
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        maxlength: 100
+        trim: true,
+        maxlength: 50
     },
     review: {
         title: {
@@ -25,7 +26,7 @@ const reviewSchema = mongoose.Schema({
         },
         description: {
             type: String,
-            maxlength: 500
+            maxlength: 400
         },
         rating: {
             type: Number,

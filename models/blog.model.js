@@ -22,7 +22,7 @@ const blogSchema = mongoose.Schema({
         }
     },
     userInfo: {
-        name: {
+        name: { 
             type: String,
             required: true,
             maxlength: 70
